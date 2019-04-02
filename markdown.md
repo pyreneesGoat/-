@@ -171,6 +171,7 @@
 14. 单行文本框
 
 在一行的开头输入两个tab
+
 15. 多行文本框
 
 在每一行的开头输入两个tab
@@ -181,6 +182,8 @@
 例如：`我愿无我、服务人民`
 
 17. [表情](https://github.com/guodongxiaren/README/blob/master/emoji.md)
+
 例如：
-[表情](https://github.com/guodongxiaren/README/blob/master/emoji.md)
+`[表情](https://github.com/guodongxiaren/README/blob/master/emoji.md)`
+
 :bowtie:
