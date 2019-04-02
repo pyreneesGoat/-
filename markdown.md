@@ -167,3 +167,20 @@
   [^2]: <canvas> 标签只是图形容器，您必须使用脚本来绘制图形
   ```
 13. [Makedown 编写工具](https://typora.io/)
+
+14. 单行文本框
+
+在一行的开头输入两个tab
+15. 多行文本框
+
+在每一行的开头输入两个tab
+
+16. 部分文字高亮
+
+想让一段话的部分文字高亮，起到突出作用，你可以把它用 ``包裹起来
+例如：`我愿无我、服务人民`
+
+17. [表情](https://github.com/guodongxiaren/README/blob/master/emoji.md)
+例如：
+[表情](https://github.com/guodongxiaren/README/blob/master/emoji.md)
+:bowtie:
