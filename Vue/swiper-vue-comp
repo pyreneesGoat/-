@@ -1,0 +1,161 @@
+项目开发中需要封装一个类型效果的组件，使用swiper实现；
+
+![1.gif](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/a5d2e498086140dcadb44291f6e7d677~tplv-k3u1fbpfcp-watermark.image)
+
+##### 安装swiper
+
+`npm i swiper`
+
+##### 引入
+
+```js
+import Swiper from 'swiper'
+import 'swiper/swiper-bundle.css'
+```
+
+##### 最终代码如下
+
+```js
+<template>
+<div class="swiper-box" :id="id">
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide swiper-item" v-for="(item, index) in slides" :key="index">
+        {{ item.name }}
+      </div>
+    </div>
+  </div>
+  <img @click="preClick" class="leftimg" src="@/assets/images/overallSituation/left-arrow.png" />
+  <img @click="nextClick" class="rightimg" src="@/assets/images/overallSituation/right-arrow.png" />
+</div>
+</template>
+
+<script>
+import Swiper from 'swiper'
+import 'swiper/swiper-bundle.css'
+
+export default {
+  data () {
+    return {
+      swiperInstance: null
+    }
+  },
+  props: {
+    slides: {
+      type: Array,
+      default () {
+        return [
+          { id: 1, name: '全部' },
+          { id: 2, name: 'SK 人员' },
+          { id: 3, name: 'SW 人员' },
+          { id: 4, name: '涉毒人员' },
+          { id: 5, name: '刑事前科人员' },
+          { id: 6, name: '肇事逃逸人员' },
+          { id: 7, name: '其他人员' }
+        ]
+      }
+    },
+    id: {
+      type: String,
+      required: true,
+      default: 'swiperId'
+    }
+  },
+  mounted () {
+    const that = this
+    this.swiperInstance = new Swiper(`#${this.id} .swiper-container`, {
+      direction: 'horizontal',
+      loop: true,
+      speed: 400,
+      slidesPerView: 6,
+      spaceBetween: 10,
+      observer: true, // 修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true, // 修改swiper的父元素时，自动初始化swiper
+      autoplay: {
+        delay: 2000,
+        disableOnInteraction: false
+      },
+      // autoplay: true,
+      initialSlide: 3,
+      slideToClickedSlide: true,
+      centeredSlides: true,
+      slideActiveClass: 'slide-visible',
+      on: {
+        slideChangeTransitionEnd: function (r) {
+          console.log(r.realIndex)
+          that.$emit('swiper-avtive', r.realIndex)
+        }
+      }
+    })
+  },
+  methods: {
+    preClick () {
+      this.swiperInstance.slidePrev()
+    },
+    nextClick () {
+      this.swiperInstance.slideNext()
+    }
+  }
+}
+</script>
+
+<style scoped>
+.swiper-box {
+  width: 100%;
+  position: relative;
+}
+.swiper-container {
+  width: 90%;
+  height: auto;
+}
+.swiper-item {
+  width: 1rem;
+  height: 0.24rem;
+  line-height: 0.24rem;
+  text-align: center;
+  font-size: 0.14rem;
+  color: #80DFFF;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+.leftimg {
+  position: absolute;
+  top: 0.04rem;
+  left: 2%;
+  cursor: pointer;
+  z-index: 9;
+  background-image: linear-gradient(to right, rgba(3, 40, 67, 0.1), rgba(3, 40, 67, 0.8));
+  padding-right: 4px;
+}
+.rightimg {
+  position: absolute;
+  top: 0.04rem;
+  right: 2%;
+  cursor: pointer;
+  z-index: 9;
+  background-image: linear-gradient(to left, rgba(3, 40, 67, 0.1), rgba(3, 40, 67, 0.8));
+  padding-left: 4px;
+}
+.slide-visible {
+  background-image: url("../../../assets/images/common/tab-active.png");
+  background-size: 100% 100%;
+  font-size: 0.16rem;
+  color: #ffffff;
+}
+</style>
+
+```
+
+##### 注意点
+
+1. 项目中100px = 1rem；
+2. 用到的图片列于下面
+3. 每个用到的地方需要传id， `new Swiper(`#${this.id} .swiper-container`, {...}`，不定义id会报错。
+4. 向父组件触发`that.$emit('swiper-avtive', r.realIndex)`事件，获取当前哪一个选择是激活的。
+5. 
+
+![tab-active.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/7d049874cae245158a89d6c41a0ae9fc~tplv-k3u1fbpfcp-watermark.image)
+
+![left-arrow.png](https://p1-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e4af179b4554beaa2e3fdb3bc007b4a~tplv-k3u1fbpfcp-watermark.image)
+
+![right-arrow.png](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/9e4af179b4554beaa2e3fdb3bc007b4a~tplv-k3u1fbpfcp-watermark.image)
